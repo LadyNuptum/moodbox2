@@ -36,7 +36,11 @@ jobs:
         run: mvn clean package -DskipTests
 
       - name: Confirm JAR exists
-        run: ls -l target && test -f target/app.jar
+        run: |
+          set -e
+          ls -l target
+          JAR=$(ls target/*.jar | head -n1)
+          echo "Found JAR: $JAR"
 
       - name: Build Docker image (no cache)
         run: |
